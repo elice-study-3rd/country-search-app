@@ -1,0 +1,15 @@
+:root {
+    --light-mode-text: hsl(200, 15%, 8%);
+    --light-mode-backgrount: hsl(0, 0%, 98%);
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+header.light-theme {
+    background-color: var(--light-mode-backgrount);
+    color: var(--light-mode-text);
+}
