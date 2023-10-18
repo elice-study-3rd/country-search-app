@@ -1,11 +1,13 @@
 import { useQuery } from "react-query";
-import { fetchAllCountries } from "../api/fetch";
+import { Fetcher } from "../api/fetch";
 import { CountryCard } from "../components/CountryCard";
 
 import "../styles/Main.css";
 
 const Main = () => {
-    const { data, isLoading, isError } = useQuery(["country"], () => fetchAllCountries());
+    const fetcher = new Fetcher();
+
+    const { data, isLoading, isError } = useQuery(["country"], () => fetcher.fetchAllCountries());
 
     if (isLoading) {
         //로딩창
