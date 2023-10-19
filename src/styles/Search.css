@@ -34,3 +34,7 @@
     border: none;
     cursor: pointer;
 }
+
+.submitButton:focus {
+    outline: none;
+}
