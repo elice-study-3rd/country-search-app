@@ -1,0 +1,46 @@
+.DropDown_Btn {
+  position: absolute;
+  top: 20px;
+  right: 225px;
+
+  width: 200px;
+  padding: 15px 0 15px 30px;
+
+  background-color: hsl(0, 0%, 100%);
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 5px;
+}
+
+.DropDown_Btn div {
+  display: inline-block;
+  margin-right: 50px;
+}
+
+.Dropdown_list {
+  list-style: none;
+  position: absolute;
+  top: 65px;
+  right: 225px;
+
+  width: 200px;
+  padding: 10px 0 10px 30px;
+
+  background-color: hsl(0, 0%, 100%);
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 5px;
+}
+
+.Dropdown_list li {
+  margin: 10px 0;
+
+  width: fit-content;
+  cursor: pointer;
+}
+
+.Dropdown_list li:hover {
+  color: grey;
+}
+
+.fa-solid {
+  cursor: pointer;
+}

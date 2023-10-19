@@ -1,18 +1,18 @@
 :root {
-    --very-light-gray: hsl(0, 0%, 98%);
-    --card-height: 360px;
+  --very-light-gray: hsl(0, 0%, 98%);
+  --card-height: 360px;
 }
 
 main {
-    background-color: var(--very-light-gray);
+  background-color: var(--very-light-gray);
 }
 
 .cardList {
-    width: 1500px;
-    padding: 100px;
-    margin: 0px auto;
-    display: grid;
-    grid-template-columns: repeat(4, calc(var(--card-height) * 0.9));
-    justify-items: center;
-    gap: 60px;
+  width: 1500px;
+  padding: 100px;
+  margin: 0px auto;
+  display: grid;
+  grid-template-columns: repeat(4, calc(var(--card-height) * 0.9));
+  justify-items: center;
+  gap: 60px;
 }
