@@ -41,40 +41,23 @@ class Fetcher extends React.Component {
     }
 
     /**
-     * 전달받은 데이터와 타입을 기준으로 '오름차순'으로 정렬된 데이터를 반환하는 내부 함수
+     * 전달받은 데이터와 타입을 direction 파라미터를 기준으로 
+     * '오름차순' 또는 ' 내림차순'으로 정렬된 데이터를 반환하는 내부 함수
      * 
      * @param data {array} country 배열 데이터
      * @param condition {array (string)} 정렬 기준 (데이터 객체 내 키 값을 뎁스 순서대로 명시)
+     * @param direction {int} 정렬 방향 1이면 오름차순, -1이면 내림차순
      * @return {array} 정렬이 적용된 배열을 반환함
      */
-    ascendOrder (data, condition) {
+    order (data, condition, direction) {
         if (condition[0] === 'name') {
             return data.sort( (a, b) => {
-                return a[condition[0]][condition[1]].localeCompare(b[condition[0]][condition[1]]);
+                return (a[condition[0]][condition[1]].localeCompare(b[condition[0]][condition[1]]) * direction);
             });
         } else if (condition[0] === 'population') {
-            return data.sort( (a, b) => a[condition[0]] - b[condition[0]]);
+            return data.sort( (a, b) => (a[condition[0]] - b[condition[0]]) * direction);
         }
     }
-
-    /**
-     * 전달받은 데이터와 타입을 기준으로 '내림차순'으로 정렬된 데이터를 반환하는 내부 함수
-     * 
-     * @param data {array} country 배열 데이터
-     * @param condition {array (string)} 정렬 기준 (데이터 객체 내 키 값을 뎁스 순서대로 명시)
-     * @return {array} 정렬이 적용된 배열을 반환함
-     */
-    descendOrder (data, condition) {
-        if (condition[0] === 'name') {
-            return data.sort( (a, b) => {
-                return b[condition[0]][condition[1]].localeCompare(a[condition[0]][condition[1]]);
-            });
-        } else if (condition[0] === 'population') {
-            return data.sort( (a, b) => b[condition[0]] - a[condition[0]]);
-        }
-    }
-
-    
 
     /**
      * 전체 국가 목록을 반환하는 함수
