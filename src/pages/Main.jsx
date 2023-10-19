@@ -1,11 +1,15 @@
 import { useQuery } from "react-query";
-import { fetchAllCountries } from "../api/fetch";
+import { Fetcher } from "../api/fetch";
 import { CountryCard } from "../components/CountryCard";
+import Search from "../components/Search";
 
 import "../styles/Main.css";
 
 const Main = () => {
-    const { data, isLoading, isError } = useQuery(["country"], () => fetchAllCountries());
+    const fetcher = new Fetcher();
+    const { data, isLoading, isError } = useQuery(["country"], () =>
+        fetcher.fetchAllCountries()
+    );
 
     if (isLoading) {
         //로딩창
@@ -14,7 +18,7 @@ const Main = () => {
     } else {
         return (
             <main>
-                <header>{/* 검색창과 드롭다운 메뉴 */}</header>
+                <Search />
                 <article className="cardList">
                     {data.map((eachCountry) => {
                         return (
@@ -22,7 +26,9 @@ const Main = () => {
                                 key={eachCountry.cca2}
                                 imageUrl={eachCountry.flags.svg}
                                 countryName={eachCountry.name.common}
-                                population={eachCountry.population.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                                population={eachCountry.population
+                                    .toString()
+                                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                                 region={eachCountry.region}
                                 capital={eachCountry.capital}
                             ></CountryCard>

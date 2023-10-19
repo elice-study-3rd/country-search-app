@@ -1,0 +1,36 @@
+:root {
+    --very-light-gray: hsl(0, 0%, 98%);
+    --White : hsl(0, 0%, 100%);
+}
+
+.searchContainer {
+    width: 1500px;
+    margin: 0 auto;
+}
+
+.searchForm {
+    display: flex;
+    width: 306px;
+    padding: 10px;
+    border-radius: 6px;
+    background-color: var(--White);
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 10px;
+}
+
+.searchInput {
+    width: 200px;
+    height: 20px;
+    border: none;
+    margin-left: 10px;
+}
+
+.searchInput:focus {
+    outline: none;
+}
+
+.submitButton {
+    display: flex;
+    background: var(--White);
+    border: none;
+    cursor: pointer;
+}
