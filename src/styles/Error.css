@@ -1,0 +1,29 @@
+.errorCard {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.errorTitle {
+    margin: 0px;
+    font-size: 1.5rem;
+    font-weight: 300;
+    text-align: center;
+}
+
+.errorCode {
+    margin: 0.1rem 0px;
+    font-size: 5rem;
+    font-weight: 900;
+    text-align: center;
+    text-shadow: -0.04em 0em #235aaa, 0.04em 0em #fad246;
+    letter-spacing: 0.5rem;
+}
+
+.errorDescription {
+    font-size: 0.8rem;
+    font-weight: 300;
+    text-align: center;
+}

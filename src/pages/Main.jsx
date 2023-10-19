@@ -1,19 +1,35 @@
 import { useQuery } from "react-query";
 import { Fetcher } from "../api/fetch";
 import { CountryCard } from "../components/CountryCard";
+import { CountryCardSkeleton } from "../components/skeleton/CountryCardSkeleton";
+import { Error } from "../components/Error";
 
 import "../styles/Main.css";
 
 const Main = () => {
     const fetcher = new Fetcher();
 
-    const { data, isLoading, isError } = useQuery(["country"], () => fetcher.fetchAllCountries());
+    const { data, isLoading, isIdle, error } = useQuery(["country"], () => {
+        return fetcher.fetchAllCountries();
+    });
 
-    if (isLoading) {
-        //로딩창
-    } else if (isError) {
-        //에러
-    } else {
+    const mainUIErrorMessage = {
+        404: [<br />, "But It's not your fault. Maybe server error."],
+    };
+
+    if (isLoading || isIdle) {
+        document.body.style.setProperty("overflow", "hidden");
+        return (
+            <main>
+                <article className="cardList">
+                    {new Array(8).fill("").map((_, index) => {
+                        return <CountryCardSkeleton key={index}></CountryCardSkeleton>;
+                    })}
+                </article>
+            </main>
+        );
+    } else if (data) {
+        document.body.style.setProperty("overflow", "scroll");
         return (
             <main>
                 <header>{/* 검색창과 드롭다운 메뉴 */}</header>
@@ -31,6 +47,12 @@ const Main = () => {
                         );
                     })}
                 </article>
+            </main>
+        );
+    } else {
+        return (
+            <main>
+                <Error key={error ? error.message : "error"} errorCode={error && error.message} additionalMessage={error && mainUIErrorMessage[error.message]}></Error>
             </main>
         );
     }

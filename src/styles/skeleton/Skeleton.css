@@ -1,0 +1,40 @@
+:root {
+    --skeleton-bg-color: rgb(245, 245, 245);
+    --skeleton-animation: load 1s infinite alternate;
+}
+
+@keyframes load {
+    0% {
+        background-color: rgb(245, 245, 245);
+    }
+    100% {
+        background-color: rgb(250, 250, 250);
+    }
+}
+
+.skeleton {
+    pointer-events: none;
+    position: relative;
+}
+
+.skeletonBlock {
+    background-color: var(--skeleton-bg-color);
+    animation: var(--skeleton-animation);
+}
+
+.skeletonTitle {
+    background-color: var(--skeleton-bg-color);
+    height: 25px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    animation: var(--skeleton-animation);
+}
+
+.skeletonContent {
+    background-color: var(--skeleton-bg-color);
+    width: 75%;
+    height: 25px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    animation: var(--skeleton-animation);
+}
