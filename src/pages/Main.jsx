@@ -11,17 +11,16 @@ const Main = () => {
     fetcher.fetchAllCountries()
   );
 
+  console.log(data);
+
   // 토글 상태
   const [view, setView] = useState(false);
 
   const Dropdown = () => {
     return (
       <ul className="Dropdown_list">
-        <li id="list_Africa">Africa</li>
-        <li id="list_America">America</li>
-        <li id="list_Asia">Asia</li>
-        <li id="list_Europe">Europe</li>
-        <li id="list_Oceania">Oceania</li>
+        <li id="list_Africa">Filter by Region</li>
+        <li id="list_America">Filter by Independent</li>
       </ul>
     );
   };
@@ -33,15 +32,15 @@ const Main = () => {
   } else {
     return (
       <main>
-        <header>
-          {/* 검색창과 드롭다운 메뉴 */}
+        <header>{/* 검색창과 드롭다운 메뉴 */}</header>
+        <div className="dropDown_wrapping">
           <div
             className="DropDown_Btn"
             onClick={() => {
               setView(!view);
             }}
           >
-            <div>Filter by Region</div>
+            <div>Filter</div>
             {view ? (
               <i className="fa-solid fa-chevron-down"></i>
             ) : (
@@ -49,7 +48,17 @@ const Main = () => {
             )}
           </div>
           {view && <Dropdown />}
-        </header>
+          <div className="Align">
+            <input type="radio" name="Align_list" id="Align_list1"></input>
+            <label for="Align_list1">국가명 오름차순</label>
+            <input type="radio" name="Align_list" id="Align_list2"></input>
+            <label for="Align_list2">국가명 내림차순</label>
+            <input type="radio" name="Align_list" id="Align_list3"></input>
+            <label for="Align_list3">인구수 오름차순</label>
+            <input type="radio" name="Align_list" id="Align_list4"></input>
+            <label for="Align_list4">인구수 내림차순</label>
+          </div>
+        </div>
         <article className="cardList">
           {data.map((eachCountry) => {
             return (
