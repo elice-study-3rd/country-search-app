@@ -46,10 +46,10 @@ class Fetcher extends React.Component {
      * 
      * @param data {array} country 배열 데이터
      * @param condition {array (string)} 정렬 기준 (데이터 객체 내 키 값을 뎁스 순서대로 명시)
-     * @param direction {int} 정렬 방향 1이면 오름차순, -1이면 내림차순
+     * @param direction {int} 기본값은 1. 값이 1이면 오름차순, -1이면 내림차순
      * @return {array} 정렬이 적용된 배열을 반환함
      */
-    order (data, condition, direction) {
+    order (data, condition, direction = 1) {
         if (condition[0] === 'name') {
             return data.sort( (a, b) => {
                 return (a[condition[0]][condition[1]].localeCompare(b[condition[0]][condition[1]]) * direction);
