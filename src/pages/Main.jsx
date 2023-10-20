@@ -1,11 +1,12 @@
 import { useQuery } from "react-query";
 import { Fetcher } from "../api/fetch";
 import { CountryCard } from "../components/CountryCard";
-import Search from "../components/Search";
 
 import "../styles/Main.css";
+import Search from "../components/Search";
 
 const Main = () => {
+
     const fetcher = new Fetcher();
     const { data, isLoading, isError } = useQuery(["country"], () =>
         fetcher.fetchAllCountries()

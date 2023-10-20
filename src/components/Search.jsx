@@ -1,7 +1,6 @@
 import "../styles/Search.css"
 import { Icon } from '@iconify/react';
 import { useEffect, useState } from "react";
-
 import { Fetcher } from "../api/fetch";
 
 const Search = () => {
