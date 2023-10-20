@@ -5,10 +5,10 @@ import { CountryCardSkeleton } from "../components/skeleton/CountryCardSkeleton"
 import { Error } from "../components/Error";
 
 import "../styles/Main.css";
+import Search from "../components/Search";
 
 const Main = () => {
     const fetcher = new Fetcher();
-
     const { data, isLoading, isIdle, error } = useQuery(["country"], () => {
         return fetcher.fetchAllCountries();
     });
@@ -32,7 +32,7 @@ const Main = () => {
         document.body.style.setProperty("overflow", "scroll");
         return (
             <main>
-                <header>{/* 검색창과 드롭다운 메뉴 */}</header>
+                <Search />
                 <article className="cardList">
                     {data.map((eachCountry) => {
                         return (
@@ -40,7 +40,9 @@ const Main = () => {
                                 key={eachCountry.cca2}
                                 imageUrl={eachCountry.flags.svg}
                                 countryName={eachCountry.name.common}
-                                population={eachCountry.population.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                                population={eachCountry.population
+                                    .toString()
+                                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                                 region={eachCountry.region}
                                 capital={eachCountry.capital}
                             ></CountryCard>

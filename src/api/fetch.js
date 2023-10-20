@@ -3,11 +3,11 @@ import React from "react";
 /**
  * Fetcher Class
  * URL 혹은 로컬 스토리지에 저장된 값을 반환받는 메소드를 포함한다.
- *
- * @fetchAllCountries 파라미터 없음
- * @searchCountryByFullName {countryName} 파라미터 필요
- * @searchCountriesByName {countryName} 파라미터 필요
- * @searchCountriesByRegion {regionName} 파라미터 필요
+ * 
+ * @function fetchAllCountries 파라미터 없음
+ * @function searchCountryByFullName {countryName} 파라미터 필요
+ * @function searchCountriesByName {countryName} 파라미터 필요
+ * @function searchCountriesByRegion {regionName} 파라미터 필요
  */
 class Fetcher extends React.Component {
     constructor() {
@@ -36,6 +36,25 @@ class Fetcher extends React.Component {
             });
 
         return fetchResult;
+    }
+
+    /**
+     * 전달받은 데이터와 타입을 direction 파라미터를 기준으로 
+     * '오름차순' 또는 ' 내림차순'으로 정렬된 데이터를 반환하는 내부 함수
+     * 
+     * @param data {array} country 배열 데이터
+     * @param condition {array (string)} 정렬 기준 (데이터 객체 내 키 값을 뎁스 순서대로 명시)
+     * @param direction {int} 기본값은 1. 값이 1이면 오름차순, -1이면 내림차순
+     * @return {array} 정렬이 적용된 배열을 반환함
+     */
+    order (data, condition, direction = 1) {
+        if (condition[0] === 'name') {
+            return data.sort( (a, b) => {
+                return (a[condition[0]][condition[1]].localeCompare(b[condition[0]][condition[1]]) * direction);
+            });
+        } else if (condition[0] === 'population') {
+            return data.sort( (a, b) => (a[condition[0]] - b[condition[0]]) * direction);
+        }
     }
 
     /**
