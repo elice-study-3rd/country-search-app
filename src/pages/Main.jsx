@@ -1,5 +1,6 @@
 import { useQuery } from "react-query";
 import { Fetcher } from "../api/fetch";
+import { contentRouter } from "../router/router";
 import { CountryCard } from "../components/CountryCard";
 import { CountryCardSkeleton } from "../components/skeleton/CountryCardSkeleton";
 import { Error } from "../components/Error";
@@ -9,8 +10,10 @@ import Search from "../components/Search";
 
 const Main = () => {
     const fetcher = new Fetcher();
+    let renderData = contentRouter(window.location.href.split('/')); 
+    
     const { data, isLoading, isIdle, error } = useQuery(["country"], () => {
-        return fetcher.fetchAllCountries();
+        return renderData;
     });
 
     const mainUIErrorMessage = {
