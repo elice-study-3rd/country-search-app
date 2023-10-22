@@ -26,9 +26,10 @@ const Search = () => {
     useEffect(() => {
         const findCountriesByName = async () => {
             if(keywordArguments !== "") {
-                const result = await fetcher
-                    .searchCountriesByName(keywordArguments);
-                setCountriesByName(result);
+                // const result = await fetcher
+                //     .searchCountriesByName(keywordArguments);
+                // setCountriesByName(result);
+                window.location.href=`/search?q=${keyword}`;
             }
         }
         findCountriesByName();
