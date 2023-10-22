@@ -10,6 +10,7 @@ const Search = () => {
     const [keywordArguments, setKeywordArguments] = useState("");
 
     const fetcher = new Fetcher();
+    const searchQuery = window.location.search.substring(3);
 
     // input onChange 핸들러
     const keywordChangeHandler = (e) => {
@@ -24,6 +25,7 @@ const Search = () => {
 
     // input value값과 일부 일치하는 모든 국가 반환
     useEffect(() => {
+        setKeyword(searchQuery);
         const findCountriesByName = async () => {
             if(keywordArguments !== "") {
                 // const result = await fetcher

@@ -15,41 +15,39 @@ const fetcher = new Fetcher();
  */
 async function contentRouter (path) {
 
-    let renderPath = [];
-    let result = [];
+    let renderPath = new URL(path);
+    let searchParam = ""; // fetch 함수에 전달할 파라미터
+    let result = []; // 반환할 결과 배열
+    
+    if(renderPath.pathname !== "/") {
+        // pathname이 있는 경우 - e.g. localhost:3000/search?q=korea
+        // search 값은 ?q=korea가 되기 때문에 앞 3글자는 삭제한 값을 검색 파라미터에 할당
+        searchParam = renderPath.search.substring(3);
+    } 
 
-    if(path.join().includes("detail")) {
-        renderPath = path[path.length-1].split('/');
-    } else if (path.join().includes("search") || path.join().includes("region")) {
-        renderPath =  path[path.length-1].split('?q=');
-    } else {
-        renderPath = path[path.length-1].split('/');
-    }
-
-    if(renderPath.length === 1) {
-        if( renderPath[0] === "") {
-            return fetcher.fetchAllCountries();
-        } else {
-            return fetcher.searchCountryByFullName(renderPath[0]);
+    if(renderPath.pathname === "/") {
+        result = await fetcher.fetchAllCountries();
+    } else if(renderPath.pathname === "/search") {
+        try {
+            result = await fetcher.searchCountriesByName(searchParam);
+            if(Object.keys(result).length === 0) result = [];
+        } catch(error) {
+            if (error.status === "404") result = [];
         }
-    } else if(renderPath.length > 1) {
-        if(renderPath[0] === "search") {
-            try {
-                result = await fetcher.searchCountriesByName(renderPath[1]);
-            } catch(error) {
-                if (error.message === "404") {
-                    result = [];
-                }
-            }
-        } else if(renderPath[0] === "region"){
-            try {
-                result = await fetcher.searchCountriesByRegion(renderPath[1]);
-            } catch(error) {
-                if (error.message === "404") {
-                    result = [];
-                }
-            }
-        } 
+    } else if(renderPath.pathname === "/region"){
+        try {
+            result = await fetcher.searchCountriesByRegion(searchParam);
+            if(Object.keys(result).length === 0) result = [];
+        } catch(error) {
+            if (error.status === "404") result = [];
+        }
+    } else if(renderPath.pathname === "/detail"){
+        try {
+            result = await fetcher.searchCountryByFullName(searchParam);
+            if(Object.keys(result).length === 0) result = [];
+        } catch(error) {
+            if (error.status === "404") result = [];
+        }
     }
 
     return result;

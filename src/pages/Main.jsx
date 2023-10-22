@@ -10,7 +10,7 @@ import Search from "../components/Search";
 
 const Main = () => {
     const fetcher = new Fetcher();
-    let renderData = contentRouter(window.location.href.split('/')); 
+    let renderData = contentRouter(window.location.href);
     
     const { data, isLoading, isIdle, error } = useQuery(["country"], () => {
         return renderData;
