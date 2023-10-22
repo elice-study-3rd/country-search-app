@@ -28,6 +28,7 @@
     margin-bottom: 5px;
     border-radius: 5px;
     animation: var(--skeleton-animation);
+    animation-delay: 0.2s;
 }
 
 .skeletonContent {
