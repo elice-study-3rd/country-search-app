@@ -1,10 +1,10 @@
-import "../styles/Search.css"
-import { Icon } from '@iconify/react';
+import "../styles/Search.css";
+import { Icon } from "@iconify/react";
 import { useEffect, useState } from "react";
+
 import { Fetcher } from "../api/fetch";
 
-const Search = () => {
-
+const Search = (props) => {
     const [countriesByName, setCountriesByName] = useState(null);
     const [keyword, setKeyword] = useState("");
     const [keywordArguments, setKeywordArguments] = useState("");
@@ -14,23 +14,30 @@ const Search = () => {
     // input onChange 핸들러
     const keywordChangeHandler = (e) => {
         setKeyword(e.target.value);
-    }
+    };
 
     // form onSubmit 핸들러
     const onSubmitHandler = (e) => {
         e.preventDefault();
         setKeywordArguments(keyword);
-    }
+    };
 
     // input value값과 일부 일치하는 모든 국가 반환
     useEffect(() => {
         const findCountriesByName = async () => {
-            if(keywordArguments !== "") {
-                const result = await fetcher
-                    .searchCountriesByName(keywordArguments);
-                setCountriesByName(result);
+            if (keywordArguments !== "") {
+                try {
+                    const result = await fetcher.searchCountriesByName(keywordArguments);
+                    setCountriesByName(result);
+                    props.changeCountryData(result);
+                } catch (error) {
+                    if (error.message === "404") {
+                        setCountriesByName(null);
+                        props.changeCountryData([]);
+                    }
+                }
             }
-        }
+        };
         findCountriesByName();
     }, [keywordArguments]);
 
