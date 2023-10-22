@@ -8,6 +8,7 @@ main {
     min-height: 100vh;
     height: auto;
     background-color: var(--very-light-gray);
+    padding-top: 100px;
 }
 
 .cardList {
