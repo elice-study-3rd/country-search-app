@@ -14,7 +14,6 @@ const Detail = (props) => {
                 <button
                     className="back"
                     onClick={() => {
-                        props.changePath(`/`);
                         window.history.back();
                     }}
                 >
