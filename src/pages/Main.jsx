@@ -12,10 +12,20 @@ const Main = () => {
   );
 
   // console.log(data);
+  // console.log(data?.[0]?.region);
 
   const [view, setView] = useState(false);
-
+  const [viewRegion, setViewRegion] = useState(false);
+  const [viewIndependent, setViewIndependent] = useState(false);
   const [sortType, setSortType] = useState(null);
+
+  const toggleRegion = () => {
+    setViewRegion(!viewRegion);
+  };
+
+  const toggleIndependent = () => {
+    setViewIndependent(!viewIndependent);
+  };
 
   const sortData = (type) => {
     if (type === sortType) {
@@ -74,8 +84,27 @@ const Main = () => {
             </div>
             {view && (
               <ul className="dropdown_list">
-                <li>Filter by Region</li>
-                <li>Filter by Independent</li>
+                <li onClick={toggleRegion}>
+                  Filter by Region
+                  {viewRegion && (
+                    <ul className="region">
+                      <li>Africa</li>
+                      <li>America</li>
+                      <li>Asia</li>
+                      <li>Europe</li>
+                      <li>Oceania</li>
+                    </ul>
+                  )}
+                </li>
+                <li onClick={toggleIndependent}>
+                  Filter by Independent
+                  {viewIndependent && (
+                    <ul className="independent">
+                      <li>Independent</li>
+                      <li>UnIndependent</li>
+                    </ul>
+                  )}
+                </li>
               </ul>
             )}
           </div>

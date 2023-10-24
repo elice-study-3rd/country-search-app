@@ -49,10 +49,19 @@
   cursor: pointer;
 }
 
-.dropdown_list li:hover {
-  color: gray;
+/*  */
+
+.region li:hover,
+.independent li:hover {
+  color: grey;
 }
 
+.region,
+.independent {
+  list-style: none;
+}
+
+/*  */
 .sort-menu {
   width: 1480px;
 
