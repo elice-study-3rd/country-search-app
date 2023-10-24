@@ -16,7 +16,7 @@ const Main = () => {
     const fetcher = new Fetcher();
     const [countryData, setCountryData] = useState([]);
     const [isDarkMode, setIsDarkMode] = useState(false);
-
+    
     //검색 컴포넌트에서 API 호출 결과를 메인에 전달하기 위한 함수
     const changeCountryData = (data) => {
         setCountryData(data);
@@ -26,6 +26,8 @@ const Main = () => {
     const changeIsDarkMode = () => {
         setIsDarkMode(!isDarkMode);
     };
+
+    let renderData = contentRouter(window.location.href);
 
     //API로부터 나라 정보를 가져옴 (React Query)
     const { data, isLoading, isIdle, error } = useQuery(["country"], () => {

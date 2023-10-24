@@ -10,7 +10,6 @@ const Search = (props) => {
     const [keywordArguments, setKeywordArguments] = useState("");
 
     const fetcher = new Fetcher();
-    const searchQuery = window.location.search.substring(3);
 
     // input onChange 핸들러
     const keywordChangeHandler = (e) => {
@@ -25,13 +24,14 @@ const Search = (props) => {
 
     // input value값과 일부 일치하는 모든 국가 반환
     useEffect(() => {
-        setKeyword(searchQuery);
         const findCountriesByName = async () => {
             if (keywordArguments !== "") {
                 try {
                     const result = await fetcher.searchCountriesByName(keywordArguments);
                     setCountriesByName(result);
                     props.changeCountryData(result);
+                    const pathName = `/search?q=${keyword}`;
+                    window.history.pushState( null, "", pathName);
                 } catch (error) {
                     if (error.message === "404") {
                         setCountriesByName(null);
