@@ -8,7 +8,7 @@ import { useCountryData } from "../hooks/useCountryData";
 import "../styles/Main.css";
 import NoResultImage from "../assets/default/no_result.png";
 
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 
 const Main = (props) => {
     const [countryData, setCountryData] = useState([]);
@@ -55,7 +55,7 @@ const Main = (props) => {
         return (
             <main className={props.isDarkMode ? "dark-mode" : ""}>
                 <header>
-                    <Search changeCountryData={changeCountryData} />
+                    <Search isDarkMode={props.isDarkMode} changeCountryData={changeCountryData} />
                 </header>
                 {countryData.length <= 0 ? ( //검색 결과가 없으면
                     <article className="noResult">
@@ -64,22 +64,24 @@ const Main = (props) => {
                     </article>
                 ) : (
                     //검색 결과 있으면
-                    <article className="cardList">
-                        {countryData.map((eachCountry) => {
-                            return (
-                                <a href={`/detail?q=${eachCountry.name.common}`} onClick={() => props.changePath(`/detail?q=${eachCountry.name.common}`)} key={eachCountry.cca2}>
-                                    <CountryCard
-                                        imageUrl={eachCountry.flags.svg}
-                                        countryName={eachCountry.name.common}
-                                        population={eachCountry.population.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                                        region={eachCountry.region}
-                                        capital={eachCountry.capital}
-                                        isDarkMode={props.isDarkMode}
-                                    ></CountryCard>
-                                </a>
-                            );
-                        })}
-                    </article>
+                    <Fragment>
+                        <article className="cardList">
+                            {countryData.map((eachCountry) => {
+                                return (
+                                    <a href={`/detail?q=${eachCountry.name.common}`} onClick={() => props.changePath(`/detail?q=${eachCountry.name.common}`)} key={eachCountry.cca2}>
+                                        <CountryCard
+                                            imageUrl={eachCountry.flags.svg}
+                                            countryName={eachCountry.name.common}
+                                            population={eachCountry.population.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                                            region={eachCountry.region}
+                                            capital={eachCountry.capital}
+                                            isDarkMode={props.isDarkMode}
+                                        ></CountryCard>
+                                    </a>
+                                );
+                            })}
+                        </article>
+                    </Fragment>
                 )}
             </main>
         );

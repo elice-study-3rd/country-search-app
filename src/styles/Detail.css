@@ -1,20 +1,15 @@
 :root {
     --light-mode-text: hsl(200, 15%, 8%);
-    --light-mode-backgrount: hsl(0, 0%, 98%);
+    --light-mode-background: hsl(0, 0%, 98%);
 }
 
-.countryModal{
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
+.countryModal {
     height: 100%;
-    background: var(--light-mode-backgrount);
+    background: var(--light-mode-background);
     padding: 30px;
 }
 
 .back {
-    position: absolute;
     top: 3rem;
     left: 30px;
     background: #fdfdfd;
@@ -48,13 +43,13 @@
     margin-left: 20px;
 }
 
-.rightModal h1{
+.rightModal h1 {
     margin: 10px 0;
     letter-spacing: 1px;
     font-size: 40px;
 }
 
-.modalInfo{
+.modalInfo {
     display: flex;
     justify-content: space-between;
 }
@@ -62,7 +57,7 @@
 .inner p {
     letter-spacing: 1px;
 }
-.inner p>strong {
+.inner p > strong {
     font-weight: 600;
 }
 
