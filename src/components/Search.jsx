@@ -1,15 +1,11 @@
 import "../styles/Search.css";
 import { Icon } from "@iconify/react";
-import { useEffect, useState } from "react";
-
-import { Fetcher } from "../api/fetch";
+import { useState, useEffect } from "react";
 
 const Search = (props) => {
-    const [countriesByName, setCountriesByName] = useState(null);
-    const [keyword, setKeyword] = useState("");
-    const [keywordArguments, setKeywordArguments] = useState("");
 
-    const fetcher = new Fetcher();
+    const [keyword, setKeyword] = useState("");
+    const [keywordDivide, setKeywordDivide] = useState("");
 
     // input onChange 핸들러
     const keywordChangeHandler = (e) => {
@@ -19,27 +15,32 @@ const Search = (props) => {
     // form onSubmit 핸들러
     const onSubmitHandler = (e) => {
         e.preventDefault();
-        setKeywordArguments(keyword);
+        setKeywordDivide(keyword);
     };
 
-    // input value값과 일부 일치하는 모든 국가 반환
+    // 키워드가 common 혹은 region인지 구분하여 obj로 전달
     useEffect(() => {
-        const findCountriesByName = async () => {
-            if (keywordArguments !== "") {
-                try {
-                    const result = await fetcher.searchCountriesByName(keywordArguments);
-                    setCountriesByName(result);
-                    props.changeCountryData(result);
-                } catch (error) {
-                    if (error.message === "404") {
-                        setCountriesByName(null);
-                        props.changeCountryData([]);
+        const keywordTypeDivide = () => {
+            props.data.map(allCountry => {
+
+                // 데이터를 전부 대문자로 바꾼 후 비교
+                const upperKeyword = keyword.toUpperCase();
+                const commonData = allCountry.name.common.toUpperCase();
+                const regionData = allCountry.region.toUpperCase();
+
+                // keyword가 common 혹은 region에 포함되어 true면 해당값을 반환
+                if (keywordDivide !== "") {
+                    if (commonData.includes(upperKeyword)) {
+                        props.setKeywordType({ common: keywordDivide });
+                    }
+                    if (regionData.includes(upperKeyword)) {
+                        props.setKeywordType({ region: keywordDivide });
                     }
                 }
-            }
-        };
-        findCountriesByName();
-    }, [keywordArguments]);
+            });
+        }
+        keywordTypeDivide();
+    }, [keywordDivide])
 
     return (
         <div className="searchContainer">
@@ -57,7 +58,7 @@ const Search = (props) => {
                     value={keyword}
                     onChange={keywordChangeHandler}
                     className="searchInput"
-                    placeholder="Search for country..."
+                    placeholder="Search for country, region..."
                 />
             </form>
         </div>

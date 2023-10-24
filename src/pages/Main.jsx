@@ -15,11 +15,14 @@ const Main = () => {
     const fetcher = new Fetcher();
     const [countryData, setCountryData] = useState([]);
     const [isDarkMode, setIsDarkMode] = useState(false);
+    const [keywordType, setKeywordType] = useState(null);
 
     //검색 컴포넌트에서 API 호출 결과를 메인에 전달하기 위한 함수
     const changeCountryData = (data) => {
         setCountryData(data);
     };
+
+    console.log(countryData)
 
     //헤더 컴포넌트에서 다크모드 적용 여부를 메인에 전달하기 위한 함수
     const changeIsDarkMode = () => {
@@ -49,6 +52,27 @@ const Main = () => {
         }
     }, [isLoading, isIdle]);
 
+    //keywordType의 key 값으로 구분하여 일치하는 모든 국가 반환
+    useEffect(() => {
+        const findCountries = async () => {
+            try {
+                if (keywordType.common) {
+                    const commonResult = await fetcher.searchCountriesByName(keywordType.common);
+                    changeCountryData(commonResult);
+                }
+                else if(keywordType.region) {
+                    const regionResult = await fetcher.searchCountriesByRegion(keywordType.region);
+                    changeCountryData(regionResult);
+                }
+            } catch (error) {
+                if (error.message === "404") {
+                    changeCountryData([]);
+                }
+            }
+        };
+        findCountries();
+    }, [keywordType]);
+
     if (isLoading || isIdle) {
         //로딩 혹은 react query를 아예 실행하지 않았을 때
         return (
@@ -66,7 +90,12 @@ const Main = () => {
             <main className={isDarkMode ? "dark-mode" : ""}>
                 <header>
                     <Header isDarkMode={isDarkMode} changeIsDarkMode={changeIsDarkMode} />
-                    <Search changeCountryData={changeCountryData} />
+                    <Search
+                        data={data}
+                        changeCountryData={changeCountryData}
+                        keywordType={keywordType}
+                        setKeywordType={setKeywordType}
+                    />
                 </header>
                 {countryData.length <= 0 ? ( //검색 결과가 없으면
                     <article className="noResult">
