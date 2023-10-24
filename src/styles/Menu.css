@@ -45,15 +45,13 @@
 
 .dropdown_list li {
   margin: 15px 0;
-
   cursor: pointer;
 }
-
-/*  */
 
 .region li:hover,
 .independent li:hover {
   color: grey;
+  font-weight: bold;
 }
 
 .region,
@@ -61,7 +59,6 @@
   list-style: none;
 }
 
-/*  */
 .sort-menu {
   width: 1480px;
 
