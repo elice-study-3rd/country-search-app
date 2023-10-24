@@ -54,7 +54,10 @@ const Main = () => {
     useEffect(() => {
         const findCountries = async () => {
             try {
-                if (keywordType.common) {
+                if (keywordType.common === "") {
+                    changeCountryData(data);
+                }
+                else if (keywordType.common) {
                     const commonResult = await fetcher.searchCountriesByName(keywordType.common);
                     changeCountryData(commonResult);
                 }
