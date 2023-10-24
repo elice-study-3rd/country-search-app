@@ -45,12 +45,23 @@ const Search = (props) => {
         <div className="searchContainer">
             <form className="searchForm" onSubmit={onSubmitHandler}>
                 <button type="submit" className="submitButton">
-                    <Icon icon="tabler:search" color="#777" width="18" height="18" />
+                    <Icon
+                        icon="tabler:search"
+                        color="#777"
+                        width="18"
+                        height="18"
+                    />
                 </button>
-                <input type="text" value={keyword} onChange={keywordChangeHandler} className="searchInput" placeholder="Search for country..." />
+                <input
+                    type="text"
+                    value={keyword}
+                    onChange={keywordChangeHandler}
+                    className="searchInput"
+                    placeholder="Search for country..."
+                />
             </form>
         </div>
-    );
-};
+    )
+}
 
 export default Search;
