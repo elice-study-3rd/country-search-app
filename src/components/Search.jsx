@@ -21,23 +21,24 @@ const Search = (props) => {
     // 키워드가 common 혹은 region인지 구분하여 obj로 전달
     useEffect(() => {
         const keywordTypeDivide = () => {
+
+            let insertKeyword = {};
+
             props.data.map(allCountry => {
-
-                // 데이터를 전부 대문자로 바꾼 후 비교
-                const upperKeyword = keyword.toUpperCase();
+                // 데이터를 대문자로 바꾼 후 비교
+                const upperKeyword = keywordDivide.toUpperCase();
                 const commonData = allCountry.name.common.toUpperCase();
-                const regionData = allCountry.region.toUpperCase();
 
-                // keyword가 common 혹은 region에 포함되어 true면 해당값을 반환
-                if (keywordDivide !== "") {
-                    if (commonData.includes(upperKeyword)) {
-                        props.setKeywordType({ common: keywordDivide });
-                    }
-                    if (regionData.includes(upperKeyword)) {
-                        props.setKeywordType({ region: keywordDivide });
-                    }
+                // keyword가 common 혹은 region에 포함되어 true면 해당 값을 반환
+                if (commonData.includes(upperKeyword)) {
+                    insertKeyword["common"] = keywordDivide;
+                }
+                else {
+                    insertKeyword["region"] = keywordDivide;
                 }
             });
+
+            props.setKeywordType(insertKeyword);
         }
         keywordTypeDivide();
     }, [keywordDivide])

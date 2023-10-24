@@ -22,8 +22,6 @@ const Main = () => {
         setCountryData(data);
     };
 
-    console.log(countryData)
-
     //헤더 컴포넌트에서 다크모드 적용 여부를 메인에 전달하기 위한 함수
     const changeIsDarkMode = () => {
         setIsDarkMode(!isDarkMode);
@@ -52,7 +50,7 @@ const Main = () => {
         }
     }, [isLoading, isIdle]);
 
-    //keywordType의 key 값으로 구분하여 일치하는 모든 국가 반환
+    //keywordType의 key 값으로 구분하여 일치하는 국가 반환
     useEffect(() => {
         const findCountries = async () => {
             try {
@@ -60,7 +58,7 @@ const Main = () => {
                     const commonResult = await fetcher.searchCountriesByName(keywordType.common);
                     changeCountryData(commonResult);
                 }
-                else if(keywordType.region) {
+                else {
                     const regionResult = await fetcher.searchCountriesByRegion(keywordType.region);
                     changeCountryData(regionResult);
                 }
@@ -92,7 +90,6 @@ const Main = () => {
                     <Header isDarkMode={isDarkMode} changeIsDarkMode={changeIsDarkMode} />
                     <Search
                         data={data}
-                        changeCountryData={changeCountryData}
                         keywordType={keywordType}
                         setKeywordType={setKeywordType}
                     />
