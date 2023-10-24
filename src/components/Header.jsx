@@ -13,10 +13,10 @@ const Header = (props) => {
 
     return (
         <header className={"header" + (props.isDarkMode ? " dark-mode" : "")}>
-            <div class="container">
+            <div className="container">
                 <h1>Where in the world?</h1>
                 <button className="toggle" onClick={props.changeIsDarkMode}>
-                    <i class={"bx bx-moon" + (props.isDarkMode && "bxs-moon")}></i>Dark Mode
+                    <i className={"bx bx-moon" + (props.isDarkMode && "bxs-moon")}></i>Dark Mode
                 </button>
             </div>
         </header>

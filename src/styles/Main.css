@@ -1,13 +1,21 @@
 :root {
-    --very-light-gray: hsl(0, 0%, 98%);
     --card-height: 360px;
+}
+
+a {
+    text-decoration: none;
+    color: rgb(0, 0, 0);
 }
 
 main {
     font-family: "Inter", sans-serif;
     min-height: 100vh;
     height: auto;
-    background-color: var(--very-light-gray);
+}
+
+.dark-mode {
+    background-color: var(--dark-mode-background);
+    color: var(--dark-mode-text);
 }
 
 .cardList {
@@ -18,11 +26,6 @@ main {
     grid-template-columns: repeat(4, calc(var(--card-height) * 0.9));
     justify-items: center;
     gap: 60px;
-}
-
-.dark-mode {
-    background-color: var(--dark-mode-background);
-    color: var(--dark-mode-text);
 }
 
 .noResult {

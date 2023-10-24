@@ -1,35 +1,25 @@
-import { useQuery } from "react-query";
-import { Fetcher } from "../api/fetch";
 import { CountryCard } from "../components/CountryCard";
 import { CountryCardSkeleton } from "../components/skeleton/CountryCardSkeleton";
 import { Error } from "../components/Error";
-import { Header } from "../components/Header";
 import Search from "../components/Search";
+
+import { useCountryData } from "../hooks/useCountryData";
 
 import "../styles/Main.css";
 import NoResultImage from "../assets/default/no_result.png";
 
 import { useEffect, useState } from "react";
 
-const Main = () => {
-    const fetcher = new Fetcher();
+const Main = (props) => {
     const [countryData, setCountryData] = useState([]);
-    const [isDarkMode, setIsDarkMode] = useState(false);
 
     //검색 컴포넌트에서 API 호출 결과를 메인에 전달하기 위한 함수
     const changeCountryData = (data) => {
         setCountryData(data);
     };
 
-    //헤더 컴포넌트에서 다크모드 적용 여부를 메인에 전달하기 위한 함수
-    const changeIsDarkMode = () => {
-        setIsDarkMode(!isDarkMode);
-    };
-
     //API로부터 나라 정보를 가져옴 (React Query)
-    const { data, isLoading, isIdle, error } = useQuery(["country"], () => {
-        return fetcher.fetchAllCountries();
-    });
+    const { data, isLoading, isIdle, error } = useCountryData();
 
     //메인 컴포넌트에서 에러를 띄울 때, 메인 컴포넌트만의 에러 메시지를 추가적으로 전달하기 위함
     const mainUIErrorMessage = {
@@ -63,9 +53,8 @@ const Main = () => {
     } else if (countryData) {
         //데이터가 있을 때
         return (
-            <main className={isDarkMode ? "dark-mode" : ""}>
+            <main className={props.isDarkMode ? "dark-mode" : ""}>
                 <header>
-                    <Header isDarkMode={isDarkMode} changeIsDarkMode={changeIsDarkMode} />
                     <Search changeCountryData={changeCountryData} />
                 </header>
                 {countryData.length <= 0 ? ( //검색 결과가 없으면
@@ -78,15 +67,16 @@ const Main = () => {
                     <article className="cardList">
                         {countryData.map((eachCountry) => {
                             return (
-                                <CountryCard
-                                    key={eachCountry.cca2}
-                                    imageUrl={eachCountry.flags.svg}
-                                    countryName={eachCountry.name.common}
-                                    population={eachCountry.population.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                                    region={eachCountry.region}
-                                    capital={eachCountry.capital}
-                                    isDarkMode={isDarkMode}
-                                ></CountryCard>
+                                <a href={`/detail?q=${eachCountry.name.common}`} onClick={() => props.changePath(`/detail?q=${eachCountry.name.common}`)} key={eachCountry.cca2}>
+                                    <CountryCard
+                                        imageUrl={eachCountry.flags.svg}
+                                        countryName={eachCountry.name.common}
+                                        population={eachCountry.population.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                                        region={eachCountry.region}
+                                        capital={eachCountry.capital}
+                                        isDarkMode={props.isDarkMode}
+                                    ></CountryCard>
+                                </a>
                             );
                         })}
                     </article>
