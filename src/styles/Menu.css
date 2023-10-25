@@ -1,0 +1,95 @@
+.menu {
+  width: 1500px;
+  padding: 0 100px;
+  margin: 0px auto;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdown-menu {
+  position: relative;
+
+  width: 1480px;
+
+  display: flex;
+  justify-content: end;
+}
+
+.dropdown-menu .dropdown-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 210px;
+  background-color: hsl(0, 0%, 100%);
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.dropdown-menu .dropdown-button p,
+.dropdown-menu .dropdown-button .fa-solid {
+  cursor: pointer;
+}
+
+.dropdown_list {
+  position: absolute;
+  top: 50px;
+
+  list-style: none;
+
+  width: 170px;
+
+  background-color: hsl(0, 0%, 100%);
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  z-index: 1;
+}
+
+.dropdown_list li {
+  margin: 15px 0;
+  cursor: pointer;
+}
+
+.region li:hover,
+.independent li:hover {
+  color: grey;
+  font-weight: bold;
+}
+
+.region,
+.independent {
+  list-style: none;
+}
+
+.sort-menu {
+  width: 1480px;
+
+  display: flex;
+  justify-content: end;
+
+  margin-top: 15px;
+}
+
+.sort-menu div input {
+  display: none;
+}
+
+.sort-menu div input + label {
+  display: inline-block;
+  height: 24px;
+  width: 100px;
+  padding: 0 10px;
+  margin-left: 10px;
+  line-height: 24px;
+  font-size: 13px;
+  text-align: center;
+  font-weight: bold;
+  border: 1px solid #333;
+  border-radius: 5px;
+  background-color: #fff;
+  color: #33333386;
+  cursor: pointer;
+}
+
+.sort-menu > div > input:checked + label {
+  background-color: #333;
+  color: #fff;
+}
