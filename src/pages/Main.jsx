@@ -1,5 +1,6 @@
 import { useQuery } from "react-query";
 import { Fetcher } from "../api/fetch";
+import { contentRouter } from "../router/router";
 import { CountryCard } from "../components/CountryCard";
 import { CountryCardSkeleton } from "../components/skeleton/CountryCardSkeleton";
 import { Error } from "../components/Error";
@@ -15,6 +16,7 @@ const Main = () => {
     const fetcher = new Fetcher();
     const [countryData, setCountryData] = useState([]);
     const [isDarkMode, setIsDarkMode] = useState(false);
+
     const [keywordType, setKeywordType] = useState(null);
 
     //검색 컴포넌트에서 API 호출 결과를 메인에 전달하기 위한 함수
@@ -27,9 +29,11 @@ const Main = () => {
         setIsDarkMode(!isDarkMode);
     };
 
+    let renderData = contentRouter(window.location.href);
+
     //API로부터 나라 정보를 가져옴 (React Query)
     const { data, isLoading, isIdle, error } = useQuery(["country"], () => {
-        return fetcher.fetchAllCountries();
+        return renderData;
     });
 
     //메인 컴포넌트에서 에러를 띄울 때, 메인 컴포넌트만의 에러 메시지를 추가적으로 전달하기 위함
