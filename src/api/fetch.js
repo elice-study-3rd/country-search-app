@@ -1,21 +1,20 @@
-import React from 'react';
+import React from "react";
 
 /**
  * Fetcher Class
  * URL 혹은 로컬 스토리지에 저장된 값을 반환받는 메소드를 포함한다.
  * 
- * @fetchAllCountries 파라미터 없음
- * @searchCountryByFullName {countryName} 파라미터 필요
- * @searchCountriesByName {countryName} 파라미터 필요
- * @searchCountriesByRegion {regionName} 파라미터 필요
+ * @function fetchAllCountries 파라미터 없음
+ * @function searchCountryByFullName {countryName} 파라미터 필요
+ * @function searchCountriesByName {countryName} 파라미터 필요
+ * @function searchCountriesByRegion {regionName} 파라미터 필요
  */
 class Fetcher extends React.Component {
-
     constructor() {
         super();
-        this.FETCH_ALL_URL = 'https://restcountries.com/v3.1/all';
-        this.FETCH_BY_NAME_URL = 'https://restcountries.com/v3.1/name/';
-        this.FETCH_BY_REGION_URL = 'https://restcountries.com/v3.1/region/';
+        this.FETCH_ALL_URL = "https://restcountries.com/v3.1/all";
+        this.FETCH_BY_NAME_URL = "https://restcountries.com/v3.1/name/";
+        this.FETCH_BY_REGION_URL = "https://restcountries.com/v3.1/region/";
     }
 
     /**
@@ -25,19 +24,37 @@ class Fetcher extends React.Component {
      */
     fetchFromURL(url) {
         const fetchResult = fetch(url)
-            .then( response => {
+            .then((response) => {
                 if (!response.ok) {
                     throw new Error(response.status);
                 } else {
                     return response.json();
                 }
             })
-            .catch( error => {
-                console.log(error);
-                return error;
-            })
-        
+            .catch((error) => {
+                throw new Error(error.message);
+            });
+
         return fetchResult;
+    }
+
+    /**
+     * 전달받은 데이터와 타입을 direction 파라미터를 기준으로 
+     * '오름차순' 또는 ' 내림차순'으로 정렬된 데이터를 반환하는 내부 함수
+     * 
+     * @param data {array} country 배열 데이터
+     * @param condition {array (string)} 정렬 기준 (데이터 객체 내 키 값을 뎁스 순서대로 명시)
+     * @param direction {int} 기본값은 1. 값이 1이면 오름차순, -1이면 내림차순
+     * @return {array} 정렬이 적용된 배열을 반환함
+     */
+    order (data, condition, direction = 1) {
+        if (condition[0] === 'name') {
+            return data.sort( (a, b) => {
+                return (a[condition[0]][condition[1]].localeCompare(b[condition[0]][condition[1]]) * direction);
+            });
+        } else if (condition[0] === 'population') {
+            return data.sort( (a, b) => (a[condition[0]] - b[condition[0]]) * direction);
+        }
     }
 
     /**
@@ -46,8 +63,8 @@ class Fetcher extends React.Component {
      * @localStorage "allCountries" 로컬스토리지에 저장되는 이름
      * @return {array} 전체 국가 목록을 반환함
      */
-    async fetchAllCountries () {
-        if(localStorage.getItem("allCountries")==null) {
+    async fetchAllCountries() {
+        if (localStorage.getItem("allCountries") == null) {
             const fetchResult = await this.fetchFromURL(this.FETCH_ALL_URL);
             localStorage.setItem("allCountries", JSON.stringify(fetchResult));
             return fetchResult;
@@ -58,14 +75,14 @@ class Fetcher extends React.Component {
 
     /**
      * 파라미터와 '정확히' 일치하는 국가 정보를 반환하는 함수
-     * 
+     *
      * @localStorage {countryName} 로컬스토리지에 저장되는 이름 (e.g. south korea, usa)
      * @param countryName {string}  조회할 국가이름 (Fullname)
      * @return {array} countryName 해당되는 국가를 반환함 (1개)
      */
-    async searchCountryByFullName (countryName) {
-        if(localStorage.getItem(countryName)==null) {
-            const fetchResult = await this.fetchFromURL(this.FETCH_BY_NAME_URL+countryName+'?fullText=true');
+    async searchCountryByFullName(countryName) {
+        if (localStorage.getItem(countryName) == null) {
+            const fetchResult = await this.fetchFromURL(this.FETCH_BY_NAME_URL + countryName + "?fullText=true");
             localStorage.setItem(countryName, JSON.stringify(fetchResult));
             return fetchResult;
         } else {
@@ -79,9 +96,9 @@ class Fetcher extends React.Component {
      * @param countryName {string}  조회할 국가이름
      * @return {array} countryName 해당되는 국가를 반환함 (n개)
      */
-    async searchCountriesByName (countryName) {
-        const fetchResult = await this.fetchFromURL(this.FETCH_BY_NAME_URL+countryName);
-            
+    async searchCountriesByName(countryName) {
+        const fetchResult = await this.fetchFromURL(this.FETCH_BY_NAME_URL + countryName);
+
         return fetchResult;
     }
 
@@ -93,15 +110,14 @@ class Fetcher extends React.Component {
      * @return {array} regionName에 해당되는 국가를 반환함 (n개)
      */
     async searchCountriesByRegion(regionName) {
-        if(localStorage.getItem(regionName)==null) {
-            const fetchResult = await this.fetchFromURL(this.FETCH_BY_REGION_URL+regionName);
+        if (localStorage.getItem(regionName) == null) {
+            const fetchResult = await this.fetchFromURL(this.FETCH_BY_REGION_URL + regionName);
             localStorage.setItem(regionName, JSON.stringify(fetchResult));
             return fetchResult;
         } else {
             return JSON.parse(localStorage.getItem(regionName));
-        }         
+        }
     }
-
 }
 
 export { Fetcher };

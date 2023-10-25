@@ -5,7 +5,7 @@ import React from "react";
 
 const CountryCard = (props) => {
     return (
-        <div className="cardContainer">
+        <div className={"cardContainer" + (props.isDarkMode ? " dark-mode" : "")}>
             <img src={props.imageUrl} alt={props.countryName} className="cardImage"></img>
             <section className="cardDescription">
                 <h3 className="countryName">{props.countryName}</h3>
