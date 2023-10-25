@@ -1,0 +1,71 @@
+:root {
+    --light-mode-text: hsl(200, 15%, 8%);
+    --light-mode-backgrount: hsl(0, 0%, 98%);
+}
+
+.countryModal{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--light-mode-backgrount);
+    padding: 30px;
+}
+
+.back {
+    position: absolute;
+    top: 3rem;
+    left: 30px;
+    background: #fdfdfd;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    padding: 10px, 20px;
+    font-size: 16px;
+    letter-spacing: 1px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.modal {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+.leftModal {
+    width: 50%;
+}
+.leftModal img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.rightModal {
+    width: 50%;
+    margin-left: 20px;
+}
+
+.rightModal h1{
+    margin: 10px 0;
+    letter-spacing: 1px;
+    font-size: 40px;
+}
+
+.modalInfo{
+    display: flex;
+    justify-content: space-between;
+}
+
+.inner p {
+    letter-spacing: 1px;
+}
+.inner p>strong {
+    font-weight: 600;
+}
+
+.show {
+    display: none;
+}
